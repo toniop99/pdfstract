@@ -2,6 +2,8 @@
 
 A beautiful web application built with FastAPI and HTML that converts PDF files to Markdown format using various conversion libraries.
 
+![UI Screenshot](UI.png)
+
 ## Features
 
 - 🚀 **Multiple Conversion Libraries**: Support for `pymupdf4llm`, `markitdown`, `marker`, and `docling`
