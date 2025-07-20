@@ -14,10 +14,10 @@ A beautiful web application built with FastAPI and HTML that converts PDF files 
 
 ## Libraries Supported
 
-1. **pymupdf4llm** - Fast PDF text extraction with PyMuPDF
-2. **markitdown** - Microsoft's document conversion tool
-3. **marker** - Advanced PDF to Markdown conversion with ML
-4. **docling** - IBM's document intelligence platform
+1. **pymupdf4llm** (`>=0.0.26`) - Fast PDF text extraction with PyMuPDF
+2. **markitdown** (`>=0.1.2`) - Microsoft's document conversion tool
+3. **marker** (`>=1.8.1`) - Advanced PDF to Markdown conversion with ML
+4. **docling** (`>=2.41.0`) - IBM's document intelligence platform
 
 ## Installation
 
@@ -74,6 +74,22 @@ A beautiful web application built with FastAPI and HTML that converts PDF files 
    - Upload a PDF file (drag-and-drop or click to select)
    - Click "Convert to Markdown"
    - View the converted result
+
+## Running with Docker
+
+This project includes a `Dockerfile` and `docker-compose.yml` for easy containerization.
+
+1.  **Build and run the container**:
+    ```bash
+    docker-compose up --build
+    ```
+
+2.  **Open your browser** and navigate to:
+    ```
+    http://localhost:8000
+    ```
+
+This will start the application inside a Docker container, accessible on port 8000.
 
 ## API Endpoints
 
