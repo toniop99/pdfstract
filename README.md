@@ -1,4 +1,4 @@
-# PDF to Markdown Converter
+# PDF to Markdown Converter - PDFstract
 
 A beautiful web application built with FastAPI and HTML that converts PDF files to Markdown format using various conversion libraries.
 
