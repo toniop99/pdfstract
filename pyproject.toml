@@ -3,7 +3,7 @@ name = "pdftomd-ui"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
     "aiofiles>=24.1.0",
     "docling>=2.41.0",
@@ -15,5 +15,6 @@ dependencies = [
     "pypdf2>=3.0.1",
     "python-magic>=0.4.27",
     "python-multipart>=0.0.20",
+    "unstructured[all-docs]>=0.18.15",
     "uvicorn[standard]>=0.35.0",
 ]

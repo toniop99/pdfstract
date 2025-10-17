@@ -35,6 +35,13 @@ try:
     from docling.document_converter import DocumentConverter
 except ImportError:
     DocumentConverter = None
+    
+try:
+    from unstructured.partition.pdf import partition_pdf
+    from unstructured.staging.base import elements_to_md
+    unstructured_available = True
+except ImportError:
+    unstructured_available = False
 
 app = FastAPI(title="PDF to Markdown Converter", description="Convert PDF files to Markdown using various libraries")
 
@@ -78,6 +85,11 @@ async def get_available_libraries():
         libraries.append({"name": "marker", "available": True})
     else:
         libraries.append({"name": "marker", "available": False})
+        
+    if unstructured_available:
+        libraries.append({"name": "unstructured", "available": True})
+    else:
+        libraries.append({"name": "unstructured", "available": False})
     
     if DocumentConverter:
         libraries.append({"name": "docling", "available": True})
@@ -143,6 +155,18 @@ async def convert_with_docling(file_path: str) -> str:
         logger.error(f"Error with docling: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Conversion failed: {str(e)}")
 
+async def convert_with_unstructured(file_path: str) -> str:
+    """Convert PDF using unstructured"""
+    if not unstructured_available:
+        raise HTTPException(status_code=400, detail="unstructured is not available")
+    
+    try:
+        elements = partition_pdf(filename=file_path, strategy='hi_res', detect_language_per_element=True)
+        return elements_to_md(elements=elements)
+    except Exception as e:
+        logger.error(f"Error with unstructured: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Conversion failed: {str(e)}")
+    
 @app.post("/convert")
 async def convert_pdf(
     file: UploadFile = File(...),
@@ -170,6 +194,8 @@ async def convert_pdf(
             markdown_content = await convert_with_marker(temp_file_path)
         elif library == "docling":
             markdown_content = await convert_with_docling(temp_file_path)
+        elif library == 'unstructured':
+            markdown_content = await convert_with_unstructured(temp_file_path)
         else:
             raise HTTPException(status_code=400, detail="Invalid library specified")
         
